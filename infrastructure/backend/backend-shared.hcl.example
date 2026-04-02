@@ -1,0 +1,4 @@
+resource_group_name  = "rg-tfstate-platform-stg-frc-01"
+storage_account_name = "sttfplatformstgfrc01"
+container_name       = "tfstate"
+key                  = "hub-core-shared.tfstate"

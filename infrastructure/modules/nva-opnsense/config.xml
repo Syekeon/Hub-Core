@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<opnsense>
+  <version>25.1</version>
+  <theme>opnsense</theme>
+  <system>
+    <optimization>normal</optimization>
+    <hostname>OPNsense</hostname>
+    <domain>local</domain>
+    <dnsallowoverride>1</dnsallowoverride>
+    <group>
+      <name>admins</name>
+      <description>System Administrators</description>
+      <scope>system</scope>
+      <gid>1999</gid>
+      <member>0</member>
+      <priv>user-shell-access</priv>
+      <priv>page-all</priv>
+    </group>
+    <user>
+      <name>root</name>
+      <descr>System Administrator</descr>
+      <scope>system</scope>
+      <groupname>admins</groupname>
+      <password>$2b$10$YRVoF4SgskIsrXOvOQjGieB9XqHPRra9R7d80B3BZdbY/j21TwBfS</password>
+      <uid>0</uid>
+    </user>
+    <nextuid>2000</nextuid>
+    <nextgid>2000</nextgid>
+    <timezone>UTC</timezone>
+    <time-update-interval>300</time-update-interval>
+    <timeservers>0.europe.pool.ntp.org</timeservers>
+    <webgui>
+      <protocol>https</protocol>
+      <port/>
+      <nohttpreferercheck>1</nohttpreferercheck>
+      <noantilockout>1</noantilockout>
+    </webgui>
+    <disablenatreflection>yes</disablenatreflection>
+    <usevirtualterminal>1</usevirtualterminal>
+    <disableconsolemenu>1</disableconsolemenu>
+    <disablechecksumoffloading>1</disablechecksumoffloading>
+    <disablesegmentationoffloading>1</disablesegmentationoffloading>
+    <disablelargereceiveoffloading>1</disablelargereceiveoffloading>
+    <ipv6allow/>
+    <backupcount>60</backupcount>
+    <crypto_hardware>aesni</crypto_hardware>
+    <language>en_US</language>
+    <dnsserver>8.8.8.8</dnsserver>
+    <dnsserver>8.8.4.4</dnsserver>
+    <sudo_allow_wheel>1</sudo_allow_wheel>
+    <serialspeed>115200</serialspeed>
+    <primaryconsole>video</primaryconsole>
+    <secondaryconsole>serial</secondaryconsole>
+    <ssh>
+      <enabled>enabled</enabled>
+      <passwordauth>1</passwordauth>
+      <permitrootlogin>1</permitrootlogin>
+    </ssh>
+  </system>
+  <interfaces>
+    <wan>
+      <if>hn0</if>
+      <descr>WAN</descr>
+      <enable>1</enable>
+      <blockbogons>1</blockbogons>
+      <ipaddr>dhcp</ipaddr>
+    </wan>
+    <lan>
+      <if>hn1</if>
+      <descr>LAN</descr>
+      <enable>1</enable>
+      <ipaddr>dhcp</ipaddr>
+    </lan>
+  </interfaces>
+  <unbound>
+    <enable>1</enable>
+    <dnssec>1</dnssec>
+    <dnssecstripped>1</dnssecstripped>
+  </unbound>
+  <filter>
+    <rule>
+      <type>pass</type>
+      <interface>wan</interface>
+      <ipprotocol>inet</ipprotocol>
+      <statetype>keep state</statetype>
+      <protocol>tcp</protocol>
+      <source>
+        <any>1</any>
+      </source>
+      <destination>
+        <network>wanip</network>
+        <port>443</port>
+      </destination>
+      <descr>Allow HTTPS for WebGUI</descr>
+    </rule>
+    <rule>
+      <type>pass</type>
+      <interface>wan</interface>
+      <ipprotocol>inet</ipprotocol>
+      <statetype>keep state</statetype>
+      <protocol>tcp</protocol>
+      <source>
+        <any>1</any>
+      </source>
+      <destination>
+        <network>wanip</network>
+        <port>22</port>
+      </destination>
+      <descr>Allow SSH</descr>
+    </rule>
+    <rule>
+      <type>pass</type>
+      <interface>lan</interface>
+      <ipprotocol>inet</ipprotocol>
+      <statetype>keep state</statetype>
+      <descr>Allow Azure Loadbalancer Probe - with replyto LAN_GW</descr>
+      <direction>in</direction>
+      <reply-to>LAN_GW</reply-to>
+      <log>1</log>
+      <quick>1</quick>
+      <source>
+        <address>168.63.129.16</address>
+      </source>
+      <destination>
+        <network>lanip</network>
+      </destination>
+    </rule>
+    <rule>
+      <type>pass</type>
+      <interface>lan</interface>
+      <ipprotocol>inet</ipprotocol>
+      <statetype>keep state</statetype>
+      <descr>Default allow LAN to any rule</descr>
+      <source>
+        <network>lan</network>
+      </source>
+      <destination>
+        <any/>
+      </destination>
+    </rule>
+  </filter>
+  <nat>
+    <outbound>
+      <mode>automatic</mode>
+    </outbound>
+  </nat>
+  <gateways>
+    <gateway_item>
+      <interface>lan</interface>
+      <gateway>yyy.yyy.yyy.yyy</gateway>
+      <name>LAN_GW</name>
+      <priority>255</priority>
+      <weight>1</weight>
+      <ipprotocol>inet</ipprotocol>
+      <interval/>
+      <descr>LAN Gateway</descr>
+      <monitor_disable>1</monitor_disable>
+    </gateway_item>
+  </gateways>
+  <Firewall>
+    <Alias version="1.0.0">
+      <aliases>
+        <alias uuid="637063a6-909d-4544-b2ac-c883a9ea97e4">
+          <enabled>1</enabled>
+          <name>SpokeSubnets</name>
+          <type>network</type>
+          <proto/>
+          <counters>0</counters>
+          <updatefreq/>
+          <content>zzz.zzz.zzz.zzz</content>
+          <description>Spoke Subnets for routing/nat</description>
+        </alias>
+      </aliases>
+    </Alias>
+  </Firewall>
+</opnsense>
