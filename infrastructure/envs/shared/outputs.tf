@@ -37,3 +37,8 @@ output "log_analytics_workspace_id" {
 output "application_insights_id" {
   value = module.observability.application_insights_id
 }
+
+output "action_group_id" {
+  value       = module.monitoring_hub.action_group_id
+  description = "ID del Action Group ag-platform-alerts"
+}

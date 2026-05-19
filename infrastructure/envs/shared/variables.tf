@@ -74,3 +74,8 @@ variable "tag_owner" {
 variable "tag_cost_center" {
   type = string
 }
+
+variable "monitoring_alert_emails" {
+  type        = list(string)
+  description = "Lista de emails que reciben alertas de la plataforma"
+}

@@ -1,11 +1,11 @@
-subscription_id             = "e19e0ebc-a9ed-4d6f-985f-f0a9fb8b544b"
-location                    = "westeurope"
-location_short              = "weu"
-allowed_locations           = ["westeurope"]
+subscription_id             = "2d140556-0fed-401a-a125-8c737e5f49fd"
+location                    = "francecentral"
+location_short              = "frc"
+allowed_locations           = ["westeurope","francecentral"]
 workload                    = "mlops"
 environment                 = "staging"
 environment_short           = "stg"
-instance                    = "01"
+instance                    = "03"
 hub_name                    = "hub"
 rg_infra_name               = "rg-hub"
 hub_vnet_cidr               = "10.0.0.0/22"
@@ -17,11 +17,3 @@ opnsense_admin_username     = "azureuser"
 opnsense_admin_password     = "TfM-Hub-2026!"
 tag_owner                   = "tfm"
 tag_cost_center             = "master"
-
-monitoring_alert_emails = [
-  "luis-alberto.fernanz-esteban@dxc.com",
-  "david.ca.2993@gmail.com",
-  "rubendiazblanco02@gmail.com",
-  "srgn807@gmail.com",
-  "juancarlos.magro@dxc.com"
-]

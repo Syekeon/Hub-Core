@@ -118,3 +118,18 @@ module "policy_require_tags_hub" {
   scope_id      = module.resource_groups.resource_group_id
   required_tags = ["owner", "cost_center", "project", "environment"]
 }
+
+module "monitoring_hub" {
+  source = "../../modules/monitoring-hub"
+
+  environment                = var.environment
+  location                   = var.location
+  hub_resource_group_name    = module.resource_groups.resource_group_name
+  subscription_id            = var.subscription_id
+  log_analytics_workspace_id = module.observability.log_analytics_workspace_id
+  nva_vm_name                = module.nva_opnsense.vm_name
+  hub_vnet_id                = module.hub_network.hub_vnet_id
+  action_group_name          = "ag-platform-alerts"
+  alert_emails               = var.monitoring_alert_emails
+  tags                       = module.governance.tags
+}
