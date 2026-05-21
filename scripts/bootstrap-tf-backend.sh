@@ -34,3 +34,12 @@ az storage container create \
   --name "$TFSTATE_CONTAINER" \
   --account-name "$TFSTATE_STORAGE_ACCOUNT" \
   --account-key "$ACCOUNT_KEY"
+
+# Soft delete para blobs y contenedores
+az storage account blob-service-properties update \
+  --account-name "$TFSTATE_STORAGE_ACCOUNT" \
+  --resource-group "$TFSTATE_RESOURCE_GROUP" \
+  --enable-delete-retention true \
+  --delete-retention-days 7 \
+  --enable-container-delete-retention true \
+  --container-delete-retention-days 7
